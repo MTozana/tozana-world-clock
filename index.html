@@ -15,30 +15,32 @@
     <h1>
         World Clock
     </h1>
-    <select>
+    <select id="city">
         <option value="">Select a city..</option>
-        <option value="">Johannesburg</option>
-        <option value="">New York</option>
-        <option value="">lagos naija</option>
+        <option value="">Africa/Johannesburg</option>
+        <option value="">America/New_York</option>
+        <option value="">Africa/Lagos</option>
       </select>
 
+      <div id="cities">
       <div class="city" id="za">
         <div>
         <h2>Johannesburg</h2> 
-        <div class="date">January 21st 2025</div>
+        <div class="date"></div>
         </div>
-        <div class="time">1:48:15 AM</div>
+        <div class="time"></div>
         </div>
-
+      
       <div class="city" id="usa">
         <div>
         <h2>New York</h2>
-        <div class="date">January 21st 2025</div>
+        <div class="date"></div>
         </div>
-        <div class="time">1:48:15 AM</div>
+        <div class="time"></div>
       </div>
     </div>
-
+</div>
+      
     <footer>
       This project was coded by Tozana M <a href="https://github.com/MTozana/tozana-world-clock" target="_blank">
         open sourced on GitHub</a> and  <a href="https://tozana-world-clock-project.netlify.app/" target="_blank">
@@ -91,8 +93,10 @@ function updateCity(event) {
     "A"
   )}</small></div>
   </div>
+  <a href="/">All cities</a>
   `;
 }
+
 
 updateTime();
 setInterval(updateTime, 1000);
