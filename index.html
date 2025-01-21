@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.37/moment-timezone-with-data-1970-2030.js"></script>
     <link rel="stylesheet" href="css/styling.css" />
-
+   
     <title>World Clock</title>
 </head>
 <body>
@@ -22,16 +22,19 @@
         <option value="">lagos naija</option>
       </select>
 
-      <div class="city">
-        <h2>Johannesburg za</h2> 
-        <br>
+      <div class="city" id="za">
+        <div>
+        <h2>Johannesburg</h2> 
         <div class="date">January 21st 2025</div>
+        </div>
         <div class="time">1:48:15 AM</div>
         </div>
-      <div class="city">
-        <h2>New York usa</h2>
-        <br>
+
+      <div class="city" id="usa">
+        <div>
+        <h2>New York</h2>
         <div class="date">January 21st 2025</div>
+        </div>
         <div class="time">1:48:15 AM</div>
       </div>
     </div>
@@ -41,6 +44,61 @@
         open sourced on GitHub</a> and  <a href="https://tozana-world-clock-project.netlify.app/" target="_blank">
             hosted on netlify</a>
     </footer>
-    <script src="javascript/index.js"></script>
+    <script >
+       function updateTime() {
+  // Johannesburgs
+  let JohannesburgElement = document.querySelector("#za");
+  if (JohannesburgElement) {
+    let JohannesburgDateElement = JohannesburgElement.querySelector(".date");
+    let JohannesburgTimeElement = JohannesburgElement.querySelector(".time");
+    let JohannesburgTime = moment().tz("Africa/Johannesburg");
+
+    JohannesburgDateElement.innerHTML = JohannesburgTime.format("MMMM	Do YYYY");
+    JohannesburgTimeElement.innerHTML = JohannesburgTime.format(
+      "h:mm:ss [<small>]A[</small>]"
+    );
+  }
+
+  // NewYork
+  let NewYorkElement = document.querySelector("#usa");
+  if (NewYorkElement) {
+    let NewYorkDateElement = NewYorkElement.querySelector(".date");
+    let NewYorkTimeElement = NewYorkElement.querySelector(".time");
+    let NewYorkTime = moment().tz("America/New_York");
+
+    NewYorkDateElement.innerHTML = NewYorkTime.format("MMMM	Do YYYY");
+    NewYorkTimeElement.innerHTML = NewYorkTime.format(
+      "h:mm:ss [<small>]A[</small>]"
+    );
+  }
+}
+
+function updateCity(event) {
+  let cityTimeZone = event.target.value;
+  if (cityTimeZone === "current") {
+    cityTimeZone = moment.tz.guess();
+  }
+  let cityName = cityTimeZone.replace("_", " ").split("/")[1];
+  let cityTime = moment().tz(cityTimeZone);
+  let citiesElement = document.querySelector("#cities");
+  citiesElement.innerHTML = `
+  <div class="city">
+    <div>
+      <h2>${cityName}</h2>
+      <div class="date">${cityTime.format("MMMM	Do YYYY")}</div>
+    </div>
+    <div class="time">${cityTime.format("h:mm:ss")} <small>${cityTime.format(
+    "A"
+  )}</small></div>
+  </div>
+  `;
+}
+
+updateTime();
+setInterval(updateTime, 1000);
+
+let citiesSelectElement = document.querySelector("#city");
+citiesSelectElement.addEventListener("change", updateCity);
+    </script>
 </body>
 </html>
